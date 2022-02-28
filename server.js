@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect("mongodb+srv://Vamsi:<password>@cluster0.r2cie.mongodb.net/ContactDb")
+mongoose.connect("mongodb+srv://Vamsi:Altec2001@cluster0.r2cie.mongodb.net/ContactDb")
 
 app.use("/", require("./routes/contactRoute"))
 

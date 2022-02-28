@@ -1,35 +1,53 @@
-import React, {useEffect, useState} from 'react'
-import Navbar from './navbar'
+import React, { useEffect, useState } from "react";
+import Navbar from "./navbar";
+import { CONTACT_ENDPOINT } from "./contactConstant";
+
+
 function Contact() {
+  const [contact, setContact] = useState([
+    {
+      name: "",
+      address: "",
+      number: "",
+    },
+  ]);
 
-    const [contact, setContact] = useState([{
-        name: '',
-        address: '',
-        number: ''
-    }])
-
-    useEffect(() => {
-        fetch('/contact').then(res => {
-            if(res.ok) {
+  useEffect((async() => {
+    
+        try {
+            const res = await fetch(CONTACT_ENDPOINT)
+            if (res.ok) {
+               
                 return res.json()
+            } else {
+            
+                throw Error("Failed to reach contact endpoint")
+                
             }
-        }).then(jsonRes => setContact(jsonRes));
-    })
+        } catch(err) {
+            handleContactError()
+        }
+    
+  })(), []);
+
+  function handleContactError(){
+      alert("Something went wrong!");
+  }
 
   return (
     <div>
-        <Navbar />
+      <Navbar />
 
-    <h1> contact </h1>
-    {contact.map(contact =>
-    <div>
-        <h1>{contact.name}</h1>
-        <p>{contact.address}</p>
-        <p>{contact.number}</p>
+      <h1> contact </h1>
+      {contact.map((contact) => (
+        <div>
+          <h1 key="One">{contact.name}</h1>
+          <p key="Two">{contact.address}</p>
+          <p key="Three">{contact.number}</p>
+        </div>
+      ))}
     </div>
-    )}
-    </div>
-  )
+  );
 }
 
-export default Contact
+export default Contact;
